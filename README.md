@@ -22,6 +22,7 @@ A cozy **pixel-art autumn indie RPG** in a single HTML file. Choose 1 of 4 heroe
 - 🎒 **30+ items** — food, 7 weapons, artifacts, crafting/quest materials
 - 📜 **24 quests + level progression** — XP for quests and victories, growing HP & attack
 - 🌰 Acorn economy, 🔊 retro WebAudio sounds, 💾 autosave, 📱 touch controls, ⛶ fullscreen
+- 🌐 **Bilingual** — full Russian + English with an in-game switch (🌐 button)
 - 📦 **Zero dependencies** — the whole game is one `index.html`, works offline
 
 ## 🎮 How to play
@@ -34,8 +35,9 @@ A cozy **pixel-art autumn indie RPG** in a single HTML file. Choose 1 of 4 heroe
 | `Q` | Special ability |
 | `I` / `J` / `M` | Backpack / Journal / Map |
 | `F` | Fullscreen |
+| 🌐 | Switch language (RU/EN) |
 
-Talk to NPCs (`!` — new quest, `?` — quest ready to turn in), pick up loot by walking over it, and step into the glowing portal once the location's main quest is done. The game language is Russian 🇷🇺.
+Talk to NPCs (`!` — new quest, `?` — quest ready to turn in), pick up loot by walking over it, and step into the glowing portal once the location's main quest is done. Switch the language anytime with the 🌐 button (top-right) or on the title screen.
 
 **Run locally:** just open `index.html` in any modern browser — no build step, no server needed.
 
@@ -62,6 +64,7 @@ MIT — see [LICENSE](LICENSE). Made with 🍂 and autumn vibes.
 - 🎒 **30+ предметов** — еда, 7 видов оружия, артефакты, материалы для заданий
 - 📜 **24 задания + прокачка уровня** — опыт за задания и победы, рост HP и атаки
 - 🌰 Экономика на желудях, 🔊 ретро-звуки, 💾 автосохранение, 📱 управление на телефоне, ⛶ полный экран
+- 🌐 **Два языка** — полный русский + английский с переключателем в игре (кнопка 🌐)
 - 📦 **Ноль зависимостей** — вся игра это один `index.html`, работает без интернета
 
 ### 🎮 Управление
@@ -74,6 +77,7 @@ MIT — see [LICENSE](LICENSE). Made with 🍂 and autumn vibes.
 | `Q` | Суперспособность |
 | `I` / `J` / `M` | Рюкзак / Журнал / Карта |
 | `F` | Полный экран |
+| 🌐 | Смена языка (RU/EN) |
 
 Разговаривай с NPC (`!` — новое задание, `?` — можно сдать), собирай лут просто подходя к нему и заходи в светящийся портал, когда главное задание локации выполнено.
 

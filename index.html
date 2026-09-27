@@ -58,6 +58,23 @@
   #game-shell{ position:relative; border:4px solid var(--border); border-radius:12px; overflow:hidden;
     box-shadow:0 0 40px #e8852a33, 0 6px 0 #000; background:#000; }
   #game{ display:block; width:100%; aspect-ratio:16/9; image-rendering:pixelated; image-rendering:crisp-edges; background:#000; }
+  /* ===== Полноэкранный режим ===== */
+  #game-shell:fullscreen, #game-shell:-webkit-full-screen{
+    border:0; border-radius:0; max-width:none; width:100vw; height:100vh;
+    display:flex; align-items:center; justify-content:center; background:#000; box-shadow:none;
+  }
+  #game-shell:fullscreen #game, #game-shell:-webkit-full-screen #game{
+    width:100%; height:100%; aspect-ratio:auto; object-fit:contain;
+  }
+  #game-shell.pseudo-full{
+    position:fixed; inset:0; z-index:9999; border:0; border-radius:0; max-width:none;
+    display:flex; align-items:center; justify-content:center; background:#000; box-shadow:none;
+  }
+  #game-shell.pseudo-full #game{ width:100%; height:100%; aspect-ratio:auto; object-fit:contain; }
+  body.locked{ overflow:hidden; }
+  /* ===== Переключение языка ===== */
+  html[lang="en"] .lru{ display:none !important; }
+  html[lang="ru"] .len{ display:none !important; }
   #hud-top{ position:absolute; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:flex-start;
     padding:8px; pointer-events:none; gap:8px; }
   #hud-top .tb{ pointer-events:auto; }
@@ -140,23 +157,31 @@
 <div id="title-screen">
   <div class="leaves-line">🍂🍁🌰🍄🍎</div>
   <div class="game-logo">🍂 ЛИСТОПАД 🍂</div>
-  <div class="game-sub">Осенняя сказка — пиксельная инди RPG</div>
+  <div class="game-sub"><span class="lru">Осенняя сказка — пиксельная инди RPG</span><span class="len">An Autumn Tale — a pixel indie RPG</span></div>
   <div class="feat-row">
-    <span class="feat">🗺️ 10 локаций</span><span class="feat">👹 5 боссов</span>
-    <span class="feat">🧑‍🌾 40 NPC</span><span class="feat">🎒 30+ предметов</span>
-    <span class="feat">📜 24 задания</span><span class="feat">⬆️ прокачка уровня</span>
+    <span class="feat"><span class="lru">🗺️ 10 локаций</span><span class="len">🗺️ 10 locations</span></span><span class="feat"><span class="lru">👹 5 боссов</span><span class="len">👹 5 bosses</span></span>
+    <span class="feat">🧑‍🌾 40 NPC</span><span class="feat"><span class="lru">🎒 30+ предметов</span><span class="len">🎒 30+ items</span></span>
+    <span class="feat"><span class="lru">📜 24 задания</span><span class="len">📜 24 quests</span></span><span class="feat"><span class="lru">⬆️ прокачка уровня</span><span class="len">⬆️ level-ups</span></span>
   </div>
-  <div id="continue-box"></div>
-  <h2 class="sec">✨ Выбери героя ✨</h2>
+  <div id="lang-box" style="margin-bottom:8px"><button class="btn small gray" id="b-lang-title">🌐 English</button></div><div id="continue-box"></div>
+  <h2 class="sec"><span class="lru">✨ Выбери героя ✨</span><span class="len">✨ Choose your hero ✨</span></h2>
   <div id="char-grid"></div>
-  <h2 class="sec">📖 Как играть</h2>
-  <div class="howto">
+  <h2 class="sec"><span class="lru">📖 Как играть</span><span class="len">📖 How to play</span></h2>
+  <div class="howto lru">
     🍁 <b>Цель:</b> пройди все 10 осенних локаций, выполни главное задание в каждой и победи 5 боссов — вплоть до Повелителя Увядания!<br>
     <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> или <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> — движение &nbsp;•&nbsp; <kbd>Пробел</kbd> / клик — атака &nbsp;•&nbsp; <kbd>E</kbd> — говорить / портал &nbsp;•&nbsp; <kbd>Q</kbd> — суперспособность<br>
-    <kbd>I</kbd> — рюкзак &nbsp;•&nbsp; <kbd>J</kbd> — журнал заданий &nbsp;•&nbsp; <kbd>M</kbd> — карта и путешествия &nbsp;•&nbsp; <kbd>H</kbd> — помощь<br>
+    <kbd>I</kbd> — рюкзак &nbsp;•&nbsp; <kbd>J</kbd> — журнал заданий &nbsp;•&nbsp; <kbd>M</kbd> — карта и путешествия &nbsp;•&nbsp; <kbd>H</kbd> — помощь &nbsp;•&nbsp; <kbd>F</kbd> — полный экран<br>
     💬 Разговаривай с <b>NPC</b> (значок <b style="color:#ffc53d">!</b> — новое задание, <b style="color:#7bc043">?</b> — можно сдать). Предметы подбираются сами — просто подойди!<br>
     🌀 Пройди через <b>правый портал</b>, когда главное задание выполнено, чтобы попасть в следующую локацию.<br>
-    ⬆️ За задания и победы даётся <b>опыт</b>: уровень растёт, герой становится сильнее. Удачи, путник! 🍂
+    ⬆️ За задания и победы даётся <b>опыт</b>: уровень растёт, герой становится сильнее. Кнопка 🌐 — смена языка RU/EN. Удачи, путник! 🍂
+  </div>
+  <div class="howto len">
+    🍁 <b>Goal:</b> travel through all 10 autumn locations, finish the main quest in each and defeat 5 bosses — up to the Lord of Withering!<br>
+    <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows — move &nbsp;•&nbsp; <kbd>Space</kbd>/click — attack &nbsp;•&nbsp; <kbd>E</kbd> — talk/portal &nbsp;•&nbsp; <kbd>Q</kbd> — special<br>
+    <kbd>I</kbd> — backpack &nbsp;•&nbsp; <kbd>J</kbd> — journal &nbsp;•&nbsp; <kbd>M</kbd> — map &nbsp;•&nbsp; <kbd>H</kbd> — help &nbsp;•&nbsp; <kbd>F</kbd> — fullscreen<br>
+    💬 Talk to <b>NPCs</b> (<b style="color:#ffc53d">!</b> — new quest, <b style="color:#7bc043">?</b> — ready to turn in). Loot picks itself up — just walk over it!<br>
+    🌀 Enter the <b>right portal</b> once the main quest is done to reach the next location.<br>
+    ⬆️ Quests and victories grant <b>XP</b>: you level up and grow stronger. Use the 🌐 button to switch language. Good luck, traveler! 🍂
   </div>
 </div>
 
@@ -177,12 +202,12 @@
         <div id="loc-progress">●○○○○○○○○○</div>
       </div>
       <div class="tb">
-        <button class="hud-btn" id="b-inv">🎒</button><button class="hud-btn" id="b-jour">📜</button><button class="hud-btn" id="b-map">🗺️</button><button class="hud-btn" id="b-help">❓</button><button class="hud-btn" id="b-snd">🔊</button><button class="hud-btn" id="b-full" title="Полный экран (F)">⛶</button>
+        <button class="hud-btn" id="b-inv">🎒</button><button class="hud-btn" id="b-jour">📜</button><button class="hud-btn" id="b-map">🗺️</button><button class="hud-btn" id="b-help">❓</button><button class="hud-btn" id="b-snd">🔊</button><button class="hud-btn" id="b-full" title="Полный экран (F)">⛶</button><button class="hud-btn" id="b-lang" title="Язык / Language">EN</button>
       </div>
     </div>
     <div id="boss-bar"><b id="boss-name">Босс</b><div id="boss-fill" style="width:100%"></div></div>
     <div id="tracker"></div>
-    <div id="hint-bar"><kbd>E</kbd> говорить &nbsp; <kbd>Пробел</kbd> атака &nbsp; <kbd>Q</kbd> супер &nbsp; <kbd>I</kbd> рюкзак</div>
+    <div id="hint-bar"><span class="lru"><kbd>E</kbd> говорить &nbsp; <kbd>Пробел</kbd> атака &nbsp; <kbd>Q</kbd> супер &nbsp; <kbd>I</kbd> рюкзак</span><span class="len"><kbd>E</kbd> talk &nbsp; <kbd>Space</kbd> attack &nbsp; <kbd>Q</kbd> super &nbsp; <kbd>I</kbd> bag</span></div>
     <div id="interact-tip">E</div>
     <div id="banner"><h1 id="banner-t">Локация</h1><p id="banner-s">описание</p></div>
     <div id="toasts"></div>
@@ -193,30 +218,30 @@
     </div></div>
 
     <div class="modal" id="m-inv" hidden><div class="mbox">
-      <h2>🎒 Рюкзак <span id="inv-coins" style="font-size:13px"></span></h2>
+      <h2><span class="lru">🎒 Рюкзак</span><span class="len">🎒 Backpack</span> <span id="inv-coins" style="font-size:13px"></span></h2>
       <div id="inv-stats" style="font-size:12px;color:#c9a06a;margin-bottom:6px"></div>
       <div id="inv-list"></div>
-      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close>Закрыть (I)</button></div>
+      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close><span class="lru">Закрыть (I)</span><span class="len">Close (I)</span></button></div>
     </div></div>
 
     <div class="modal" id="m-shop" hidden><div class="mbox">
       <h2 id="shop-title">🏪 Лавка</h2><div id="shop-list"></div>
-      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close>Закрыть (Esc)</button></div>
+      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close><span class="lru">Закрыть (Esc)</span><span class="len">Close (Esc)</span></button></div>
     </div></div>
 
     <div class="modal" id="m-journal" hidden><div class="mbox">
-      <h2>📜 Журнал заданий</h2><div id="journal-list"></div>
-      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close>Закрыть (J)</button></div>
+      <h2><span class="lru">📜 Журнал заданий</span><span class="len">📜 Quest journal</span></h2><div id="journal-list"></div>
+      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close><span class="lru">Закрыть (J)</span><span class="len">Close (J)</span></button></div>
     </div></div>
 
     <div class="modal" id="m-map" hidden><div class="mbox">
-      <h2>🗺️ Карта Осенних Земель</h2><div id="map-list"></div>
-      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close>Закрыть (M)</button></div>
+      <h2><span class="lru">🗺️ Карта Осенних Земель</span><span class="len">🗺️ Map of the Autumn Lands</span></h2><div id="map-list"></div>
+      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close><span class="lru">Закрыть (M)</span><span class="len">Close (M)</span></button></div>
     </div></div>
 
     <div class="modal" id="m-help" hidden><div class="mbox">
-      <h2>❓ Помощь</h2>
-      <div style="font-size:13px;line-height:1.9">
+      <h2><span class="lru">❓ Помощь</span><span class="len">❓ Help</span></h2>
+      <div class="lru" style="font-size:13px;line-height:1.9">
         <kbd>WASD</kbd>/стрелки — движение • <kbd>Пробел</kbd>/клик — атака • <kbd>E</kbd> — говорить, портал<br>
         <kbd>Q</kbd> — суперспособность • <kbd>I</kbd> — рюкзак • <kbd>J</kbd> — журнал • <kbd>M</kbd> — карта • <kbd>F</kbd> — полный экран • <kbd>Esc</kbd> — закрыть<br><br>
         🍁 Предметы подбираются сами — просто подходи к ним.<br>
@@ -224,17 +249,27 @@
         🌀 Правый портал ведёт дальше, левый — назад (когда главное задание выполнено).<br>
         💀 Если погибнешь — очнёшься у входа, потеряв немного желудей. Не сдавайся!<br>
         🌰 Жёлуди — валюта. Трать их в лавках на еду и оружие.<br>
-        ⬆️ Уровень растёт за задания и победы: +здоровье и +атака.
+        ⬆️ Уровень растёт за задания и победы: +здоровье и +атака.<br>🌐 Кнопка EN/RU — смена языка.
       </div>
-      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close>Закрыть (H)</button></div>
+      <div class="len" style="font-size:13px;line-height:1.9">
+        <kbd>WASD</kbd>/arrows — move • <kbd>Space</kbd>/click — attack • <kbd>E</kbd> — talk, portal<br>
+        <kbd>Q</kbd> — special • <kbd>I</kbd> — backpack • <kbd>J</kbd> — journal • <kbd>M</kbd> — map • <kbd>F</kbd> — fullscreen • <kbd>Esc</kbd> — close<br><br>
+        🍁 Loot picks itself up — just walk over it.<br>
+        💬 NPCs with <b style="color:#ffc53d">!</b> give quests, with <b style="color:#7bc043">?</b> accept finished ones.<br>
+        🌀 The right portal leads onward, the left one — back (once the main quest is done).<br>
+        💀 If you fall — you wake up at the entrance, losing some acorns. Never give up!<br>
+        🌰 Acorns are the currency. Spend them in shops on food and weapons.<br>
+        ⬆️ Levels grow from quests and victories: +health and +attack.
+      </div>
+      <div style="text-align:center;margin-top:8px"><button class="btn small gray" data-close><span class="lru">Закрыть (H)</span><span class="len">Close (H)</span></button></div>
     </div></div>
 
     <div class="modal" id="m-victory" hidden><div class="mbox" id="victory">
-      <h1>🍂 ПОБЕДА! 🍂</h1>
+      <h1><span class="lru">🍂 ПОБЕДА! 🍂</span><span class="len">🍂 VICTORY! 🍂</span></h1>
       <div style="font-size:40px">👑🎃🍁</div>
-      <p style="font-size:13.5px;line-height:1.7">Повелитель Увядания повержен!<br>Осень спасена, и Листопад будет вечным. Ты — легенда Осенних Земель!</p>
+      <p style="font-size:13.5px;line-height:1.7"><span class="lru">Повелитель Увядания повержен!<br>Осень спасена, и Листопад будет вечным. Ты — легенда Осенних Земель!</span><span class="len">The Lord of Withering is defeated!<br>Autumn is saved, and the Leaf-fall will be eternal. You are a legend of the Autumn Lands!</span></p>
       <div class="vstat" id="victory-stats"></div>
-      <button class="btn" onclick="location.reload()">🔄 Играть снова</button>
+      <button class="btn" onclick="location.reload()"><span class="lru">🔄 Играть снова</span><span class="len">🔄 Play again</span></button>
     </div></div>
 
     <div id="touch"><div class="row">
@@ -494,6 +529,231 @@ const LOCATIONS=[
   ]}
 ];
 
+/* ================= I18N (RU/EN) ================= */
+let LANG='ru';
+try{ LANG=localStorage.getItem('listopad_lang')||'ru'; if(LANG!=='ru'&&LANG!=='en')LANG='ru'; }catch(e){ LANG='ru'; }
+const STR={
+newQuest:{ru:'📜 Новое задание: ',en:'📜 New quest: '},
+mainQuest:{ru:'📜 Главное задание: ',en:'📜 Main quest: '},
+qDoneA:{ru:'✅ «',en:'✅ "'},
+qDoneB:{ru:'» — вернись к: ',en:'" — return to: '},
+qTurned:{ru:'🏆 Задание выполнено: ',en:'🏆 Quest complete: '},
+portalOpen:{ru:'🌀 Портал на восток открыт! Иди дальше!',en:'🌀 The east portal is open! Move on!'},
+lvlA:{ru:'⬆️ УРОВЕНЬ ',en:'⬆️ LEVEL '},
+lvlB:{ru:'! Здоровье и атака выросли!',en:'! Health and attack increased!'},
+hpFull:{ru:'Здоровье полное!',en:'Health is full!'},
+equipped:{ru:'⚔️ Надето: ',en:'⚔️ Equipped: '},
+atkUp:{ru:' (атака +',en:' (attack +'},
+slainB:{ru:' повержен! +',en:' defeated! +'},
+youDied:{ru:'💀 Ты погиб... но осень вернула тебя к жизни! (-',en:'💀 You fell... but Autumn brought you back! (-'},
+needMain:{ru:'🔒 Сначала выполни главное задание этой локации!',en:'🔒 Finish this location’s main quest first!'},
+tipTalk:{ru:'E — поговорить: ',en:'E — Talk to: '},
+tipNext:{ru:'E — 🌀 дальше: ',en:'E — 🌀 Next: '},
+tipBack:{ru:'E — 🌀 назад: ',en:'E — 🌀 Back: '},
+tipLocked:{ru:'🔒 Выполни главное задание!',en:'🔒 Finish the main quest!'},
+beware:{ru:'! Берегись!',en:'! Watch out!'},
+summons:{ru:' призывает помощников!',en:' summons minions!'},
+noCoins:{ru:'Не хватает желудей!',en:'Not enough acorns!'},
+bought:{ru:'Куплено: ',en:'Purchased: '},
+dlgReady:{ru:'»</b> — готово! ',en:'"</b> — ready! '},
+dlgProg:{ru:'<br><i>Прогресс: ',en:'<br><i>Progress: '},
+dlgBossHint:{ru:'<br><i>Прогресс: убей босса! Он ждёт в правой части локации.</i>',en:'<br><i>Progress: slay the boss! It lurks on the right side of the map.</i>'},
+dlgReward:{ru:'<br>Награда: ',en:'<br>Reward: '},
+dlgXp:{ru:' опыта, ',en:' XP, '},
+btnTurnIn:{ru:'🏆 Сдать задание',en:'🏆 Turn in quest'},
+btnAccept:{ru:'✅ Взять задание',en:'✅ Accept quest'},
+btnShop:{ru:'🏪 Магазин (',en:'🏪 Shop ('},
+btnBye:{ru:'👋 Попрощаться',en:'👋 Goodbye'},
+shopOf:{ru:'🏪 Лавка: ',en:'🏪 Shop: '},
+btnBuy:{ru:'Купить',en:'Buy'},
+btnBack:{ru:'← Назад',en:'← Back'},
+invWeapon:{ru:' • Оружие: ',en:' • Weapon: '},
+fists:{ru:'кулаки 🥊',en:'🥊 fists'},
+invEmpty:{ru:'Пусто... Собери что-нибудь!',en:'Empty... Go gather something!'},
+btnEat:{ru:'Съесть',en:'Eat'},
+btnWear:{ru:'Надеть',en:'Equip'},
+jourEmpty:{ru:'Нет активных заданий. Поговори с жителями!',en:'No active quests. Talk to the locals!'},
+jourDone:{ru:'Выполнено: ',en:'Completed: '},
+jourMid:{ru:' / 24 • Побед: ',en:' / 24 • Kills: '},
+jourLvl:{ru:' • Уровень: ',en:' • Level: '},
+jourBack:{ru:'➡️ Вернись к: <b>',en:'➡️ Return to: <b>'},
+qKill:{ru:'Победи: ',en:'Defeat: '},
+qCollect:{ru:'Собери: ',en:'Gather: '},
+qTalk:{ru:'Поговори: ',en:'Talk to: '},
+qBoss:{ru:'Победи босса: ',en:'Slay the boss: '},
+trackEmpty:{ru:'📜 Нет активных заданий',en:'📜 No active quests'},
+btnFly:{ru:'Лететь 🌀',en:'Travel 🌀'},
+lv:{ru:'ур.',en:'lv.'},
+abReady:{ru:'готово (Q)',en:'ready (Q)'},
+sec:{ru:'с',en:'s'},
+hero:{ru:'герой',en:'hero'},
+vLvl:{ru:' • Уровень ',en:' • Level '},
+vQuests:{ru:'<br>📜 Заданий: ',en:'<br>📜 Quests: '},
+vKills:{ru:' • 👹 Побед: ',en:' • 👹 Kills: '},
+vTime:{ru:'<br>⏱️ Время: ',en:'<br>⏱️ Time: '},
+vMin:{ru:' мин ',en:'m '},
+vSec:{ru:' сек • 🌰 ',en:'s • 🌰 '},
+contA:{ru:'▶ Продолжить: ',en:'▶ Continue: '},
+contLvl:{ru:', ур.',en:', lv.'},
+cardAtk:{ru:'⚔️ Атака: ',en:'⚔️ Attack: '},
+cardSpd:{ru:'👟 Скорость: ',en:'👟 Speed: '},
+cardRanged:{ru:'Дальний бой',en:'Ranged'},
+cardMelee:{ru:'Ближний бой',en:'Melee'},
+btnPlay:{ru:'▶ Играть',en:'▶ Play'}
+};
+function t(k){ return (STR[k]&&STR[k][LANG])||k; }
+const EN_NPC={
+'Староста Ефим':'Elder Efim','Бабушка Варя':'Granny Varya','Тимка':'Timka','Кузнец Прохор':'Blacksmith Prokhor',
+'Силантий':'Hermit Silanty','Дорофей':'Mushroomer Dorofei','Злата':'Herbalist Zlata','Есений':'Poet Yesenin',
+'Королева Полян':'Queen of the Glades','Учёный Мицелий':'Scholar Mycelius','Торговец Жад':'Merchant Zhad','Алёнка':'Alyonka',
+'Художница Лина':'Artist Lina','Берёзовый Дух':'Birch Spirit','Пасечник Устин':'Beekeeper Ustin','Скрипач Веня':'Violinist Venya',
+'Знахарка Агафья':'Healer Agafya','Рыбак Клим':'Fisher Klim','Болотник':'Bolotnik','Торговка Тиной':'Trader Tina',
+'Мельник Тихон':'Miller Tikhon','Подмастерье Гоша':'Apprentice Gosha','Странствующий Торговец':'Wandering Merchant','Призрак Мельника':'Miller’s Ghost',
+'Фермерша Марфа':'Farmer Marfa','Добряк':'Dobryak','Купец Онуфрий':'Trader Onufry','Филька и Фрося':'Filka and Frosya',
+'Охотница Диана':'Huntress Diana','Следопыт Ермак':'Pathfinder Ermak','Шаман Кедр':'Shaman Kedr','Отшельник Фока':'Hermit Foka',
+'Садовник Иннокентий':'Gardener Innokenty','Повариха Пелагея':'Cook Pelageya','Шарик':'Sharik','Призрак Садовницы':'Gardener’s Ghost',
+'Последний Друид':'The Last Druid','Воин Света':'Warrior of Light','Тень':'The Shadow','Дух Осени':'Spirit of Autumn'
+};
+const EN_CHAR={
+lesnik:{name:'Bram the Lumberjack',title:'Sturdy woodcutter 🪓',abName:'Mighty Blow',desc:'Solves problems with an axe. Very tough, fights up close — perfect for beginners.'},
+mila:{name:'Mila the Herbalist',title:'Wise healer 🌿',abName:'Healing',desc:'Hurls healing herbs from afar and mends herself. Fragile, yet unkillable.'},
+finn:{name:'Finn the Hunter',title:'Keen tracker 🏹',abName:'Triple Shot',desc:'Fast feet and a fast bow. Hits often from range, but vulnerable up close.'},
+aya:{name:'Aya the Druid',title:'Mistress of foliage 🍁',abName:'Blazing Leafstorm',desc:'Autumn magic: bolts of flame and a whirlwind of burning leaves.'}
+};
+const EN_ITEM={
+apple:{n:'Apple',d:'A juicy autumn apple. +25 HP.'},
+berries:{n:'Sugared cranberries',d:'Tart and healthy. +35 HP.'},
+honey:{n:'Linden honey',d:'Thick and warm. +45 HP.'},
+soup:{n:'Mushroom soup',d:'A rich, hearty soup. +70 HP.'},
+pie:{n:'Pumpkin pie',d:'Marfa’s legendary pastry. +100 HP.'},
+potion_s:{n:'Small potion',d:'Smells of herbs. +60 HP.'},
+potion_b:{n:'Big potion',d:'Bubbles promisingly. +150 HP.'},
+stick:{n:'Gnarled stick',d:'Better than nothing. Attack +3.'},
+knife:{n:'Mushroom knife',d:'Sharp and handy. Attack +6.'},
+bow:{n:'Maple bow',d:'Its string sings. Attack +10.'},
+axe:{n:'Lumberjack axe',d:'Heavy and reliable. Attack +15.'},
+leafsword:{n:'Sword of Leaf-fall',d:'A blade of eternal autumn. Attack +22.'},
+staff:{n:'Druid staff',d:'Hums with ancient magic. Attack +30.'},
+lightblade:{n:'Dawn Blade',d:'The very light of autumn. Attack +45.'},
+amber:{n:'Amber amulet',d:'Warm as sunshine. +30 max HP (works from backpack).'},
+ring:{n:'Pinecone ring',d:'Carved from a cone. +6 attack (in backpack).'},
+boots:{n:'Swift boots',d:'+15% speed (in backpack).'},
+charm:{n:'Leaf charm',d:'+4 attack, +20 HP (in backpack).'},
+acorn:{n:'Acorn',d:'Quest material.'},
+mushroom:{n:'Boletus',d:'Firm and fragrant.'},
+mapleleaf:{n:'Maple leaf',d:'Scarlet as sunset.'},
+birchleaf:{n:'Birch leaf',d:'Golden and tender.'},
+spore:{n:'Glowing spore',d:'Pulses with soft light.'},
+frogleg:{n:'Frog leg',d:'Klim simply adores them.'},
+gear:{n:'Gear',d:'A part of the old mill.'},
+pumpkin:{n:'Little pumpkin',d:'An orange wonder.'},
+feather:{n:'Crow feather',d:'Black as night.'},
+fang:{n:'Sharp fang',d:'A predator trophy.'}
+};
+const EN_FOE={
+slug:'Leaf Slug',squirrel:'Pesky Squirrel',boar:'Wild Boar',spider:'Forest Spider',
+mushroomling:'Mushling',spore:'Living Spore',crow:'Crow',badger:'Badger',
+swampslug:'Mire Slug',frog:'Giant Frog',weaver:'Weaver Spider',rat:'Barn Rat',
+crowguard:'Crow Warden',firepumpkin:'Fire Pumpkin',wolf:'Grey Wolf',lynx:'Lynx',
+golem:'Garden Golem',bee:'Feral Bee',ghost:'Withering Wraith',darkdruid:'Dark Druid',
+b0:'Mushroom King',b1:'Mire Kikimora',b2:'Crow Scarecrow',b3:'Pumpkin Golem',b4:'Lord of Withering'
+};
+const EN_LOC=[
+{name:'Starting Glade',sub:'Your tale begins here',
+ main:{title:'First Steps',text:'Gather 5 acorns in the glade and bring them to me. Look around, talk to the locals!',done:'Excellent! The road calls — the eastern portal is open!'},
+ npcs:[
+  {role:'Village elder',says:['Welcome to the Glade, traveler! Darkness gathers over the Hill of Withering...','Gather 5 acorns — just walk up to them. Then come back, and I will open the way for you!'],side:null},
+  {role:'Food seller 🍲',says:['Oh, how skinny! Buy some soup, dear. No traveling on an empty stomach.','My pumpkins are not ripe yet, but the honey — a delight!'],side:null},
+  {role:'Little boy',says:['Slugs ate all our cabbage again! Help us, will you?'],side:{title:'Slugs in the garden!',text:'Chase 3 leaf slugs out of our garden! They ate all the cabbage!',done:'Hurray! You are a true hero!'}},
+  {role:'Blacksmith ⚒️',says:['Need a weapon? I have a couple of blades lying around.','Smite the slugs bravely — my forging will not fail you!'],side:null}]},
+{name:'Whispering Forest',sub:'A thousand leaves whisper your name',
+ main:{title:'Boar trouble',text:'Wild boars are digging up my beds! Drive off 4 boars (defeat them) and come back.',done:'So quiet... Thank you! The way to Mushroom Meadow is open.'},
+ npcs:[
+  {role:'Hermit',says:['Shh... Hear that? The boars are digging again. The four boldest need a lesson.','The forest loves you already, traveler. I see it in your eyes.'],side:null},
+  {role:'Mushroomer',says:['The mushrooms this year are huge! Especially after the rain.'],side:{title:'Quiet hunt',text:'Pick 6 boletus for me — my wife is making soup! Mushrooms grow all over the forest.',done:'What a catch! Here is your reward.'}},
+  {role:'Herbalist 🧪',says:['Fresh potions, just brewed! Take some, you will not regret it.','Against spiders the best cure is a good hit and my potion.'],side:null},
+  {role:'Poet',says:['"A leaf is spinning, a leaf is flying..." Ah, the rhyme will not come without leaves!'],side:{title:'A poet’s inspiration',text:'Bring me 5 scarlet maple leaves — I need inspiration for a ballad!',done:'Oh, the crimson! The ballad will be magnificent!'}}]},
+{name:'Mushroom Meadow',sub:'Careful: the caps bite here',
+ main:{title:'A crown of mold',text:'The Mushroom King has gone mad and poisons the meadow with spores! Defeat him!',done:'The meadow is free! You are magnificent!'},
+ npcs:[
+  {role:'Meadow spirit 👑',says:['My husband, the King, has gone mad with power... Stop him, but be careful!','He spits spores — dodge and strike between volleys!'],side:null},
+  {role:'Mushroom scholar',says:['Spores are amazing creatures! A pity they are aggressive.'],side:{title:'Living spores',text:'For science I need to observe 5 living spores... in battle, of course!',done:'Science thanks you! Hypothesis confirmed!'}},
+  {role:'Merchant 💰',says:['Everything for the hero, everything cheap! Money first!','A bow? An axe? No, no axe... But an excellent knife!'],side:null},
+  {role:'Girl with a basket',says:['Mom says not to talk to strangers... but you are a hero!'],side:{title:'A basket for granny',text:'Pick 8 boletus for granny’s pie! Only the prettiest!',done:'Granny will bake a huge pie! Thank you!'}}]},
+{name:'Birch Grove',sub:'Gold and silence',
+ main:{title:'The golden collection',text:'Gather 6 golden birch leaves for my painting "Breath of Autumn"!',done:'The painting is finished! You are my inspiration!'},
+ npcs:[
+  {role:'Artist 🎨',says:['I need 6 perfect golden leaves! Not torn, not dusty — perfect!','Art demands sacrifices... and leaves. Many leaves.'],side:null},
+  {role:'Ancient spirit 🌳',says:['I remember when this grove was but a seed...','The crows caw restlessly. Darkness comes from the hill... Hurry, child of autumn.'],side:null},
+  {role:'Beekeeper 🍯',says:['Linden honey, buckwheat honey! And the crows — curse them...'],side:{title:'Crow trouble',text:'Crows are stealing honey from the apiary! Drive off 4 crows!',done:'The honey is saved! Help yourself!'}},
+  {role:'Musician 🎻',says:['My violin weeps at night... It needs a listener. An ancient listener.'],side:{title:'A melody for the spirit',text:'Tell the Birch Spirit I composed a melody for it. Just talk to it!',done:'The Spirit listened?! I am the greatest musician!'}}]},
+{name:'Misty Mire',sub:'Stay on the path...',
+ main:{title:'Mistress of the mire',text:'Kikimora drags travelers into the quagmire! Defeat her in the heart of the mire!',done:'The mire is just a mire again. Thank you, dear!'},
+ npcs:[
+  {role:'Healer 🧙',says:['Kikimora sits in the very heart of the quagmire. Take plenty of potions — it will be a hot fight.','Giant frogs spit venom. Do not stand still!'],side:null},
+  {role:'Fisher 🎣',says:['Biting? Not biting... But the frogs are so fat!'],side:{title:'A delicacy',text:'Fetch 4 frog legs from the giant frogs. A delicacy, you see!',done:'Oh, we will fry them up! You are a provider!'}},
+  {role:'???',says:['Blub... You are not from the quagmire... Interesting...','Kikimora fears light. Light and sharp objects. Blub.'],side:null},
+  {role:'Potion shop 🧪',says:['Potions for all mire ailments! And for kikimoras too... probably.','Haggling is welcome, but brief.'],side:null}]},
+{name:'The Old Mill',sub:'The sails creak in the wind',
+ main:{title:'Cobwebs on the millstones',text:'Weaver spiders have webbed the whole mill! Banish 6 weavers so the millstones sing again.',done:'Hear that? The millstones are singing! Thank you, friend!'},
+ npcs:[
+  {role:'Miller 🌾',says:['Six weavers holed up in the mill! The flour is all cobwebs, help!','The rats grew bold too... But first the spiders.'],side:null},
+  {role:'Apprentice',says:['Tikhon will kill me... The gears are somewhere near, I remember exactly!'],side:{title:'Lost parts',text:'I lost 3 gears around the mill... Find them, eh? Just do not tell Tikhon!',done:'You are the best! Tikhon will never know... probably.'}},
+  {role:'Merchant 🗡️',says:['Weapons from distant lands! Pricey, but worth it.','Ahead lie the Pumpkin Fields... Something is amiss there. Arm yourself!'],side:null},
+  {role:'Ghost 👻',says:['Woo-oo... I am the first miller’s ghost... Rats... I hate rats...'],side:{title:'Rest for the mill',text:'Rats... Rats gnawed my stores in life and gnaw my rest in death! Banish 5 rats!',done:'Silence at last... silence... Thank you...'}}]},
+{name:'Pumpkin Fields',sub:'A harvest of fear',
+ main:{title:'Terror of the fields',text:'Our scarecrow came alive and commands the crows! Defeat the Crow Scarecrow!',done:'The fields are saved! The harvest will be grand!'},
+ npcs:[
+  {role:'Farmer 🎃',says:['Our scarecrow came alive! The crows obey it, the pumpkins spit fire! A nightmare!','Dobryak is different, he is good. But the Crow One... Ugh!'],side:null},
+  {role:'Kind scarecrow 🌻',says:['Hello! I am a good scarecrow. Honestly. I do not hurt crows, I love children.','My evil brother, the Crow One... Stop him, please. He shames all scarecrows!'],side:null},
+  {role:'Merchant 💰',says:['Pumpkins, pies, potions! All fresh, all for the hero!','No discounts, ever. War on scarecrows is costly business.'],side:null},
+  {role:'Kids 👧🧒',says:['Are you a hero? A real one? Seen a dragon? A pumpkin with teeth?'],side:{title:'Pumpkin feast',text:'Gather 6 little pumpkins — we will throw the biggest pumpkin feast!',done:'Feast! Feast! Pumpkin feast! Hurra-a-ay!'}}]},
+{name:'Conifer Thicket',sub:'Where autumn meets winter',
+ main:{title:'Howling in the dark',text:'The wolf pack grew totally bold! Defeat 6 wolves!',done:'The thicket is safe again. You are a born hunter!'},
+ npcs:[
+  {role:'Huntress 🏹',says:['Six wolves. The biggest and boldest. Manage it — and I will respect you.','Do not touch the lynxes without need... Though Ermak thinks otherwise.'],side:null},
+  {role:'Pathfinder 🐾',says:['See the track? A lynx. See the second? Also a lynx. Plenty of them here.'],side:{title:'The spotted threat',text:'Lynxes steal supplies from our camps! Teach 4 lynxes a lesson!',done:'The tracks are clean! You are a true pathfinder!'}},
+  {role:'Shaman 🔮',says:['The forest spirits whisper... They say: buy an amulet. Spirits do not lie.','Artifacts work just by lying in your backpack. Magic!'],side:null},
+  {role:'Hermit',says:['Thirty years I have not seen people... You are the first. You look decent.','Beyond the thicket lies the Abandoned Garden. A golem moved in there. A huge one.'],side:null}]},
+{name:'Abandoned Garden',sub:'The apples remember their gardeners',
+ main:{title:'The stone gardener',text:'A huge Pumpkin Golem is trampling the garden! Defeat it before nothing is left of the garden!',done:'The garden is saved! The apple trees weep with joy!'},
+ npcs:[
+  {role:'Gardener 🍎',says:['The golem is trampling my apple trees! Thirty years I raised them! Thirty!','The bees went mad too... But the golem is the main trouble.'],side:null},
+  {role:'Cook 🥧',says:['Charlotte, strudel, pie! All from garden apples!'],side:{title:'Apple savior',text:'Pick 8 apples — I will bake charlottes for the whole garden! Apples grow everywhere.',done:'The charlottes turned out glorious! Help yourself!'}},
+  {role:'Talking dog 🐕',says:['Woof! Yes, I talk. Nothing surprising here, it is a magic garden.','The golem fears... woof... it fears nothing. Just hit it hard. Woof!'],side:null},
+  {role:'Ghost 👻',says:['Woo-oo... I planted these apple trees a hundred years ago... And the bees... Bzz-z-z...'],side:{title:'Buzzing rest',text:'Bees give me no rest even after death! Calm 5 feral bees!',done:'Silence... Silence at last...'}}]},
+{name:'Hill of Withering',sub:'The heart of darkness. The tale’s end.',
+ main:{title:'The last autumn',text:'All evil comes from the Lord of Withering. Defeat him — and autumn will be saved FOREVER!',done:'LIGHT HAS WON!'},
+ npcs:[
+  {role:'Keeper of autumn 🍁',says:['You made it... Last hero... The Lord waits atop the hill.','Stock up on potions, don your best blade. Everything depends on this fight.'],side:null},
+  {role:'Paladin ⚔️',says:['My blade is at your service... for ringing coin. Even light must eat.','Twelve hundred acorns for the Dawn Blade — and darkness will tremble!'],side:null},
+  {role:'???',says:['I am the Lord’s shadow... once he too was a druid...','He is strong, but he has a weakness: the persistence of heroes. Like yours.'],side:null},
+  {role:'Spirit 🍂',says:['I am Autumn itself. While you fight, I live. Go and win!','Take potions. It is the last I can give... besides my faith in you.'],side:null}]}
+];
+function LS(o,f,en){ if(!o._ru)o._ru={}; if(!(f in o._ru))o._ru[f]=o[f]; o[f]=(LANG==='en'?en:o._ru[f]); }
+function LM(o,f,map){ if(!o._ru)o._ru={}; if(!(f in o._ru))o._ru[f]=o[f]; var ru=o._ru[f]; o[f]=(LANG==='en'?(map[ru]||ru):ru); }
+function applyLang(){
+  var i,j;
+  for(i=0;i<CHARACTERS.length;i++){ var c=CHARACTERS[i],e=EN_CHAR[c.id]; if(!e)continue;
+    LS(c,'name',e.name); LS(c,'title',e.title); LS(c,'desc',e.desc); LS(c,'abName',e.abName); }
+  for(var id in EN_ITEM){ if(ITEMS[id]){ LS(ITEMS[id],'n',EN_ITEM[id].n); LS(ITEMS[id],'d',EN_ITEM[id].d); } }
+  for(var k in EN_FOE){ if(ENEMY_TYPES[k])LS(ENEMY_TYPES[k],'n',EN_FOE[k]); }
+  for(i=0;i<LOCATIONS.length;i++){ var L=LOCATIONS[i],le=EN_LOC[i]; if(!le)continue;
+    LS(L,'name',le.name); LS(L,'sub',le.sub);
+    LS(L.main,'title',le.main.title); LS(L.main,'text',le.main.text); LS(L.main,'done',le.main.done);
+    LM(L.main,'giver',EN_NPC);
+    if(L.boss)LS(L.boss,'n',EN_FOE[L.boss.id]);
+    for(j=0;j<L.npcs.length;j++){ var n=L.npcs[j],ne=le.npcs[j]; if(!ne)continue;
+      LM(n,'name',EN_NPC); LS(n,'role',ne.role); LS(n,'says',ne.says);
+      if(n.side&&ne.side){ LS(n.side,'title',ne.side.title); LS(n.side,'text',ne.side.text); LS(n.side,'done',ne.side.done);
+        LM(n.side,'giver',EN_NPC); if(n.side.type==='talk')LM(n.side,'target',EN_NPC); } } }
+}
+function bossName(id){ for(var i=0;i<LOCATIONS.length;i++){ var b=LOCATIONS[i].boss; if(b&&b.id===id)return b.n; } return id; }
+function updateLangBtns(){ var ht=document.getElementById('b-lang-title'); if(ht)ht.textContent=(LANG==='ru'?'🌐 English':'🌐 Русский'); var hb=document.getElementById('b-lang'); if(hb){ hb.textContent=(LANG==='ru'?'EN':'RU'); hb.title=(LANG==='ru'?'Язык: русский (нажми для English)':'Language: English (click for Русский)'); } }
+function setLang(l){ LANG=(l==='en'?'en':'ru'); try{localStorage.setItem('listopad_lang',LANG);}catch(e){} document.documentElement.lang=LANG; applyLang(); updateLangBtns(); buildTitle(); if(G){updateHUD();updateTracker();} }
+document.getElementById('b-lang').onclick=function(){ initAudio(); sfx('click'); setLang(LANG==='ru'?'en':'ru'); toast(LANG==='en'?'🌐 Language: English':'🌐 Язык: русский','quest'); };
+document.getElementById('b-lang-title').onclick=function(){ initAudio(); sfx('click'); setLang(LANG==='ru'?'en':'ru'); };
+
 /* quest index */
 const QUESTS={};
 LOCATIONS.forEach(function(L,li){
@@ -610,8 +870,8 @@ function acceptQuest(qid,auto){
   var prog=0;
   if(q.type==='collect') prog=Math.min(G.inv[q.target]||0,q.count);
   G.quests.active[qid]={q:q,progress:prog,notified:false};
-  if(!auto){ toast('📜 Новое задание: '+q.title,'quest'); sfx('quest'); }
-  else toast('📜 Главное задание: '+q.title,'quest');
+  if(!auto){ toast(t('newQuest')+q.title,'quest'); sfx('quest'); }
+  else toast(t('mainQuest')+q.title,'quest');
   updateTracker();
 }
 function questReady(qid){ var a=G.quests.active[qid]; return a&&a.progress>=a.q.count; }
@@ -621,7 +881,7 @@ function addProgressFor(type,target,n){
       a.progress=Math.min(a.q.count,a.progress+(n||1));
       if(a.progress>=a.q.count&&!a.notified){ a.notified=true;
         if(a.q.type==='boss'){ turnInQuest(qid,true); }
-        else { toast('✅ «'+a.q.title+'» — вернись к: '+a.q.giver,'good'); sfx('quest'); }
+        else { toast(t('qDoneA')+a.q.title+t('qDoneB')+a.q.giver,'good'); sfx('quest'); }
       }
     }
   }
@@ -632,16 +892,16 @@ function turnInQuest(qid,auto){
   if(q.type==='collect'){ if((G.inv[q.target]||0)<q.count){ toast('Нужно ещё: '+IN(q.target)+' ×'+(q.count-(G.inv[q.target]||0)),'bad'); return; } removeItem(q.target,q.count); }
   delete G.quests.active[qid]; G.quests.done.push(qid);
   G.coins+=q.rw.coins; if(q.rw.item) addItem(q.rw.item,q.rw.n||1);
-  toast('🏆 Задание выполнено: '+q.title+' (+'+q.rw.coins+' 🌰)','good');
+  toast(t('qTurned')+q.title+' (+'+q.rw.coins+' 🌰)','good');
   gainXp(q.rw.xp); sfx('quest');
-  if(q.isMain){ toast('🌀 Портал на восток открыт! Иди дальше!','good'); sfx('portal'); }
+  if(q.isMain){ toast(t('portalOpen'),'good'); sfx('portal'); }
   if(q.target==='b4'){ setTimeout(winGame,1400); }
   updateTracker(); updateHUD(); saveGame();
 }
 function gainXp(n){
   G.xp+=n;
   while(G.xp>=G.xpNeed){ G.xp-=G.xpNeed; G.lvl++; G.xpNeed=80+(G.lvl-1)*60;
-    G.hp=maxHp(); toast('⬆️ УРОВЕНЬ '+G.lvl+'! Здоровье и атака выросли!','good'); sfx('level');
+    G.hp=maxHp(); toast(t('lvlA')+G.lvl+t('lvlB'),'good'); sfx('level');
     for(var i=0;i<16;i++) G.parts.push({x:G.px,y:G.py-8,vx:RF(-60,60),vy:RF(-90,-20),l:RF(0.5,1),c:'#ffc53d',s:2});
   }
   updateHUD();
@@ -652,10 +912,10 @@ function addItem(id,n){ G.inv[id]=(G.inv[id]||0)+(n||1); }
 function removeItem(id,n){ G.inv[id]=Math.max(0,(G.inv[id]||0)-(n||1)); if(G.inv[id]<=0) delete G.inv[id]; }
 function useItem(id){
   var it=ITEMS[id]; if(!it||!(G.inv[id]>0)) return;
-  if(it.t==='food'){ if(G.hp>=maxHp()){ toast('Здоровье полное!','bad'); return; }
+  if(it.t==='food'){ if(G.hp>=maxHp()){ toast(t('hpFull'),'bad'); return; }
     G.hp=Math.min(maxHp(),G.hp+it.hp); removeItem(id,1); sfx('heal');
     addDmg('+'+it.hp,G.px,G.py-16,'#7bc043'); toast(it.e+' '+it.n+' (+'+it.hp+' HP)','good'); }
-  else if(it.t==='weapon'){ G.equipped=id; sfx('click'); toast('⚔️ Надето: '+it.n+' (атака +'+it.atk+')','good'); }
+  else if(it.t==='weapon'){ G.equipped=id; sfx('click'); toast(t('equipped')+it.n+t('atkUp')+it.atk+')','good'); }
   updateHUD(); if(G.modal==='inv') openInventory();
 }
 
@@ -677,7 +937,7 @@ function tryAttack(){
 function useAbility(){
   if(G.abCd>0||G.modal||G.over) return;
   var s=G.ch.special;
-  if(s==='heal'){ if(G.hp>=maxHp()){toast('Здоровье полное!','bad');return;}
+  if(s==='heal'){ if(G.hp>=maxHp()){toast(t('hpFull'),'bad');return;}
     G.abCd=12; var h=Math.round(maxHp()*0.6); G.hp=Math.min(maxHp(),G.hp+h); sfx('heal');
     addDmg('+'+h,G.px,G.py-16,'#7bc043');
     for(var i=0;i<20;i++) G.parts.push({x:G.px+RF(-12,12),y:G.py+RF(-16,4),vx:RF(-20,20),vy:RF(-70,-30),l:0.8,c:'#7bc043',s:2});
@@ -728,7 +988,7 @@ function killBoss(){
   sfx('boss'); sfx('win');
   for(var i=0;i<40;i++) G.parts.push({x:b.x+RF(-20,20),y:b.y+RF(-24,10),vx:RF(-120,120),vy:RF(-140,40),l:RF(0.4,1),c:pick(['#ffc53d','#ff7a2a','#fff','#c1440e']),s:3});
   spawnPickup('potion_b',1,b.x-14,b.y); spawnPickup('pie',1,b.x+14,b.y); spawnPickup(pick(LOCATIONS[G.loc].picks),2,b.x,b.y+8);
-  toast('👹 '+b.T.n+' повержен! +'+b.coin+' 🌰','good');
+  toast('👹 '+b.T.n+t('slainB')+b.coin+' 🌰','good');
   addProgressFor('boss',b.id,1);
   document.getElementById('boss-bar').style.display='none';
   updateHUD();
@@ -742,7 +1002,7 @@ function damagePlayer(dmg){
     G.px=90;G.py=H/2;G.invuln=2; sfx('die');
     if(G.boss){ G.boss.hp=G.boss.maxhp; }
     G.enemies.forEach(function(e){ e.x=RF(300,W-80); e.y=RF(60,H-50); });
-    toast('💀 Ты погиб... но осень вернула тебя к жизни! (-'+lost+' 🌰)','bad');
+    toast(t('youDied')+lost+' 🌰)','bad');
   }
   updateHUD();
 }
@@ -789,7 +1049,7 @@ function update(dt){
   var bb=document.getElementById('boss-bar');
   if(G.boss){ var b=G.boss; b.walk+=dt*6; b.flash=Math.max(0,b.flash-dt); b.atkCd-=dt; b.shootCd-=dt; b.sumCd-=dt;
     var bd=dist(b.x,b.y,G.px,G.py);
-    if(!G.bossSeen&&bd<230){ G.bossSeen=true; sfx('boss'); toast('👹 '+b.T.n+'! Берегись!','bad'); }
+    if(!G.bossSeen&&bd<230){ G.bossSeen=true; sfx('boss'); toast('👹 '+b.T.n+t('beware'),'bad'); }
     if(G.bossSeen){ bb.style.display='block';
       document.getElementById('boss-name').textContent='👹 '+b.T.n;
       document.getElementById('boss-fill').style.width=Math.max(0,b.hp/b.maxhp*100)+'%';
@@ -803,7 +1063,7 @@ function update(dt){
       }
       if(b.sumCd<=0&&G.enemies.length<5&&(b.id==='b2'||b.id==='b3'||b.id==='b4')){ b.sumCd=9;
         spawnEnemy(pick(LOCATIONS[G.loc].enemies),b.x+RF(-30,30),b.y+RF(-20,20));
-        toast('👹 '+b.T.n+' призывает помощников!','bad');
+        toast('👹 '+b.T.n+t('summons'),'bad');
       }
       b.x=clamp(b.x,30,W-30); b.y=clamp(b.y,50,H-20);
     } else bb.style.display='none';
@@ -847,11 +1107,11 @@ function update(dt){
 function mainDone(li){ return G.quests.done.indexOf(LOCATIONS[li||G.loc].main.id)>=0; }
 function nearestInteract(){
   var best=null,bd=30;
-  G.npcs.forEach(function(n){ var d=dist(n.x,n.y,G.px,G.py); if(d<bd){bd=d;best={kind:'npc',o:n,label:'E — поговорить: '+n.def.name};} });
+  G.npcs.forEach(function(n){ var d=dist(n.x,n.y,G.px,G.py); if(d<bd){bd=d;best={kind:'npc',o:n,label:t('tipTalk')+n.def.name};} });
   G.portals.forEach(function(p){ var d=dist(p.x,p.y,G.px,G.py); if(d<34){
-    if(p.dir===1){ if(mainDone()) best={kind:'portal',o:p,label:'E — 🌀 дальше: '+(LOCATIONS[G.loc+1]?LOCATIONS[G.loc+1].name:'???')};
-      else best={kind:'locked',o:p,label:'🔒 Выполни главное задание!'}; }
-    else { if(G.loc>0) best={kind:'portal',o:p,label:'E — 🌀 назад: '+LOCATIONS[G.loc-1].name}; }
+    if(p.dir===1){ if(mainDone()) best={kind:'portal',o:p,label:t('tipNext')+(LOCATIONS[G.loc+1]?LOCATIONS[G.loc+1].name:'???')};
+      else best={kind:'locked',o:p,label:t('tipLocked')}; }
+    else { if(G.loc>0) best={kind:'portal',o:p,label:t('tipBack')+LOCATIONS[G.loc-1].name}; }
   }});
   return best;
 }
@@ -859,7 +1119,7 @@ function doInteract(){
   var it=G._inter; if(!it||G.modal||G.over) return;
   if(it.kind==='npc') openDialog(it.o);
   else if(it.kind==='portal'){ sfx('portal'); startLocation(G.loc+it.o.dir); }
-  else if(it.kind==='locked'){ toast('🔒 Сначала выполни главное задание этой локации!','bad'); sfx('click'); }
+  else if(it.kind==='locked'){ toast(t('needMain'),'bad'); sfx('click'); }
 }
 
 /* ================= RENDER ================= */
@@ -1041,7 +1301,7 @@ function showBanner(t,s){
 function updateHUD(){
   document.getElementById('h-name').textContent=G.ch.name;
   document.getElementById('h-coins').textContent=G.coins;
-  document.getElementById('h-lvl').textContent='ур.'+G.lvl;
+  document.getElementById('h-lvl').textContent=t('lv')+G.lvl;
   document.getElementById('loc-name').textContent=(G.loc+1)+'. '+LOCATIONS[G.loc].name;
   var dots=''; for(var i=0;i<10;i++) dots+=i<=G.maxLoc?'●':'○';
   document.getElementById('loc-progress').textContent=dots;
@@ -1051,15 +1311,15 @@ function updateHUDbars(){
   if(!G) return;
   document.getElementById('hp-fill').style.width=clamp(G.hp/maxHp()*100,0,100)+'%';
   document.getElementById('xp-fill').style.width=clamp(G.xp/G.xpNeed*100,0,100)+'%';
-  document.getElementById('h-ab').textContent=G.ch.abName+': '+(G.abCd>0?Math.ceil(G.abCd)+'с':'готово (Q)');
+  document.getElementById('h-ab').textContent=G.ch.abName+': '+(G.abCd>0?Math.ceil(G.abCd)+t('sec'):t('abReady'));
   document.getElementById('ab-fill').style.width=clamp((1-G.abCd/12)*100,0,100)+'%';
 }
 function questText(a){
   var q=a.q;
-  if(q.type==='kill') return 'Победи: '+ENEMY_TYPES[q.target].n+' '+a.progress+'/'+q.count;
-  if(q.type==='collect') return 'Собери: '+IN(q.target)+' '+a.progress+'/'+q.count;
-  if(q.type==='talk') return 'Поговори: '+q.target+' ('+a.progress+'/'+q.count+')';
-  if(q.type==='boss') return 'Победи босса: '+q.target;
+  if(q.type==='kill') return t('qKill')+ENEMY_TYPES[q.target].n+' '+a.progress+'/'+q.count;
+  if(q.type==='collect') return t('qCollect')+IN(q.target)+' '+a.progress+'/'+q.count;
+  if(q.type==='talk') return t('qTalk')+q.target+' ('+a.progress+'/'+q.count+')';
+  if(q.type==='boss') return t('qBoss')+bossName(q.target);
   return '';
 }
 function updateTracker(){
@@ -1068,7 +1328,7 @@ function updateTracker(){
   ids.forEach(function(qid){ var a=G.quests.active[qid];
     h+='<div>'+(questReady(qid)?'<span class="qdone">❓ ':'▶ ')+a.q.title+': '+questText(a)+(questReady(qid)?' → '+a.q.giver+'</span>':'')+'</div>';
   });
-  if(!h) h='<div>📜 Нет активных заданий</div>';
+  if(!h) h='<div>'+t('trackEmpty')+'</div>';
   el.innerHTML=h;
 }
 function closeModals(){ ['m-dialog','m-inv','m-shop','m-journal','m-map','m-help'].forEach(function(id){document.getElementById(id).hidden=true;}); G.modal=null; }
@@ -1094,53 +1354,53 @@ function openDialog(n){
   var mq=LOCATIONS[G.loc].main, mAct=G.quests.active[mq.id], mDone=G.quests.done.indexOf(mq.id)>=0;
   var side=n.def.side, sAct=side?G.quests.active[side.id]:null, sDone=side?G.quests.done.indexOf(side.id)>=0:false;
   if(mq.giver===n.def.name&&!mDone&&mAct){
-    if(questReady(mq.id)&&mq.type!=='boss'){ txt='<b>«'+mq.title+'»</b> — готово! '+mq.done; btns.push({t:'🏆 Сдать задание',f:function(){turnInQuest(mq.id); openDialog(n);}}); }
-    else if(mq.type==='boss'){ txt='📜 <b>«'+mq.title+'»</b>: '+mq.text+'<br><i>Прогресс: убей босса! Он ждёт в правой части локации.</i>'; }
-    else { txt='📜 <b>«'+mq.title+'»</b>: '+mq.text+'<br><i>Прогресс: '+questText(mAct)+'</i>'; }
+    if(questReady(mq.id)&&mq.type!=='boss'){ txt='<b>«'+mq.title+'»</b>'+t('dlgReady')+mq.done; btns.push({t:t('btnTurnIn'),f:function(){turnInQuest(mq.id); openDialog(n);}}); }
+    else if(mq.type==='boss'){ txt='📜 <b>«'+mq.title+'»</b>: '+mq.text+t('dlgBossHint'); }
+    else { txt='📜 <b>«'+mq.title+'»</b>: '+mq.text+t('dlgProg')+questText(mAct)+'</i>'; }
   }
-  else if(side&&!sDone&&!sAct){ txt='❗ <b>«'+side.title+'»</b>: '+side.text+'<br>Награда: '+side.rw.xp+' опыта, '+side.rw.coins+' 🌰'+(side.rw.item?', '+ITEMS[side.rw.item].e+' '+ITEMS[side.rw.item].n:'');
-    btns.push({t:'✅ Взять задание',f:function(){acceptQuest(side.id); openDialog(n);}});
+  else if(side&&!sDone&&!sAct){ txt='❗ <b>«'+side.title+'»</b>: '+side.text+t('dlgReward')+side.rw.xp+t('dlgXp')+side.rw.coins+' 🌰'+(side.rw.item?', '+ITEMS[side.rw.item].e+' '+ITEMS[side.rw.item].n:'');
+    btns.push({t:t('btnAccept'),f:function(){acceptQuest(side.id); openDialog(n);}});
   }
   else if(side&&sAct&&!questReady(side.id)){ txt='📜 <b>«'+side.title+'»</b>: '+questText(sAct)+'<br><i>'+side.text+'</i>'; }
-  else if(side&&sAct&&questReady(side.id)){ txt='<b>«'+side.title+'»</b> — готово! '+side.done;
-    btns.push({t:'🏆 Сдать задание',f:function(){turnInQuest(side.id); openDialog(n);}});
+  else if(side&&sAct&&questReady(side.id)){ txt='<b>«'+side.title+'»</b>'+t('dlgReady')+side.done;
+    btns.push({t:t('btnTurnIn'),f:function(){turnInQuest(side.id); openDialog(n);}});
   }
   else { txt=n.def.says[n.sayI%n.def.says.length]; n.sayI++; }
-  if(n.def.shop) btns.push({t:'🏪 Магазин ('+n.def.shop.length+')',f:function(){openShop(n);}});
-  btns.push({t:'👋 Попрощаться',f:closeModals});
+  if(n.def.shop) btns.push({t:t('btnShop')+n.def.shop.length+')',f:function(){openShop(n);}});
+  btns.push({t:t('btnBye'),f:closeModals});
   document.getElementById('dlg-text').innerHTML=txt;
   var bb=document.getElementById('dlg-btns'); bb.innerHTML='';
   btns.forEach(function(b){ var btn=document.createElement('button'); btn.className='btn small'; btn.textContent=b.t; btn.onclick=function(){initAudio();sfx('click');b.f();}; bb.appendChild(btn); });
 }
 function openShop(n){
   G.modal='shop'; document.getElementById('m-dialog').hidden=true; document.getElementById('m-shop').hidden=false;
-  document.getElementById('shop-title').textContent='🏪 Лавка: '+n.def.name+' (🌰 '+G.coins+')';
+  document.getElementById('shop-title').textContent=t('shopOf')+n.def.name+' (🌰 '+G.coins+')';
   var list=document.getElementById('shop-list'); list.innerHTML='';
   n.def.shop.forEach(function(id){ var it=ITEMS[id];
     var row=document.createElement('div'); row.className='inv-row';
     row.innerHTML='<span class="em">'+it.e+'</span><div class="inf"><div class="nm">'+it.n+' — '+it.pr+' 🌰</div><div class="ds">'+it.d+'</div></div>';
-    var b=document.createElement('button'); b.className='btn small'; b.textContent='Купить';
-    b.onclick=function(){ if(G.coins<it.pr){toast('Не хватает желудей!','bad');return;}
-      G.coins-=it.pr; addItem(id,1); sfx('coin'); toast('Куплено: '+it.e+' '+it.n,'good'); updateHUD(); openShop(n); };
+    var b=document.createElement('button'); b.className='btn small'; b.textContent=t('btnBuy');
+    b.onclick=function(){ if(G.coins<it.pr){toast(t('noCoins'),'bad');return;}
+      G.coins-=it.pr; addItem(id,1); sfx('coin'); toast(t('bought')+it.e+' '+it.n,'good'); updateHUD(); openShop(n); };
     row.appendChild(b); list.appendChild(row);
   });
   var back=document.createElement('div'); back.style.textAlign='center'; back.style.marginTop='8px';
-  var bb=document.createElement('button'); bb.className='btn small gray'; bb.textContent='← Назад';
+  var bb=document.createElement('button'); bb.className='btn small gray'; bb.textContent=t('btnBack');
   bb.onclick=function(){openDialog(n);}; back.appendChild(bb); list.appendChild(back);
 }
 function openInventory(){
   G.modal='inv'; ['m-dialog','m-shop','m-journal','m-map','m-help'].forEach(function(id){document.getElementById(id).hidden=true;});
   document.getElementById('m-inv').hidden=false;
   document.getElementById('inv-coins').textContent='🌰 '+G.coins;
-  document.getElementById('inv-stats').innerHTML='❤️ '+Math.round(G.hp)+'/'+maxHp()+' • ⚔️ '+atkTotal()+' • 👟 '+Math.round(speedTotal())+' • Оружие: '+(G.equipped?ITEMS[G.equipped].e+' '+ITEMS[G.equipped].n:'кулаки 🥊');
+  document.getElementById('inv-stats').innerHTML='❤️ '+Math.round(G.hp)+'/'+maxHp()+' • ⚔️ '+atkTotal()+' • 👟 '+Math.round(speedTotal())+t('invWeapon')+(G.equipped?ITEMS[G.equipped].e+' '+ITEMS[G.equipped].n:t('fists'));
   var list=document.getElementById('inv-list'); list.innerHTML='';
   var ids=Object.keys(G.inv);
-  if(!ids.length) list.innerHTML='<p style="color:#c9a06a">Пусто... Собери что-нибудь!</p>';
+  if(!ids.length) list.innerHTML='<p style="color:#c9a06a">'+t('invEmpty')+'</p>';
   ids.forEach(function(id){ var it=ITEMS[id]; if(!it)return;
     var row=document.createElement('div'); row.className='inv-row';
     row.innerHTML='<span class="em">'+it.e+'</span><div class="inf"><div class="nm">'+it.n+' ×'+G.inv[id]+(G.equipped===id?' ✅':'')+(it.t==='artifact'?' ✨':'')+'</div><div class="ds">'+it.d+'</div></div>';
     if(it.t==='food'||it.t==='weapon'){ var b=document.createElement('button'); b.className='btn small green';
-      b.textContent=it.t==='food'?'Съесть':'Надеть';
+      b.textContent=it.t==='food'?t('btnEat'):t('btnWear');
       b.onclick=function(){useItem(id);}; row.appendChild(b); }
     list.appendChild(row);
   });
@@ -1149,11 +1409,11 @@ function openJournal(){
   G.modal='journal'; closeModals(); G.modal='journal'; document.getElementById('m-journal').hidden=false;
   var list=document.getElementById('journal-list'); list.innerHTML='';
   var act=Object.keys(G.quests.active);
-  if(!act.length) list.innerHTML+='<p>Нет активных заданий. Поговори с жителями!</p>';
+  if(!act.length) list.innerHTML+='<p>'+t('jourEmpty')+'</p>';
   act.forEach(function(qid){ var a=G.quests.active[qid],q=a.q;
-    list.innerHTML+='<div class="qcard'+(q.isMain?' main':'')+(questReady(qid)?' ready':'')+'"><div class="qt">'+(q.isMain?'⭐ ':'📜 ')+q.title+'</div><div>'+q.text+'</div><div><i>'+questText(a)+'</i></div><div class="qbar"><div style="width:'+(a.progress/q.count*100)+'%"></div></div>'+(questReady(qid)&&q.type!=='boss'?'<div>➡️ Вернись к: <b>'+q.giver+'</b></div>':'')+'</div>';
+    list.innerHTML+='<div class="qcard'+(q.isMain?' main':'')+(questReady(qid)?' ready':'')+'"><div class="qt">'+(q.isMain?'⭐ ':'📜 ')+q.title+'</div><div>'+q.text+'</div><div><i>'+questText(a)+'</i></div><div class="qbar"><div style="width:'+(a.progress/q.count*100)+'%"></div></div>'+(questReady(qid)&&q.type!=='boss'?'<div>'+t('jourBack')+q.giver+'</b></div>':'')+'</div>';
   });
-  list.innerHTML+='<h3>Выполнено: '+G.quests.done.length+' / 24 • Побед: '+G.kills+' • Уровень: '+G.lvl+'</h3>';
+  list.innerHTML+='<h3>'+t('jourDone')+G.quests.done.length+t('jourMid')+G.kills+t('jourLvl')+G.lvl+'</h3>';
 }
 function openMap(){
   G.modal='map'; closeModals(); G.modal='map'; document.getElementById('m-map').hidden=false;
@@ -1162,7 +1422,7 @@ function openMap(){
     var unlocked=i<=G.maxLoc, cur=i===G.loc;
     var row=document.createElement('div'); row.className='loc-row'+(cur?' cur':'');
     row.innerHTML='<span>'+(cur?'📍':(unlocked?'🍂':'🔒'))+'</span><div style="flex:1"><b>'+(i+1)+'. '+L.name+'</b><br><span style="font-size:11px;color:#c9a06a">'+L.sub+'</span></div>';
-    if(unlocked&&!cur){ var b=document.createElement('button'); b.className='btn small'; b.textContent='Лететь 🌀';
+    if(unlocked&&!cur){ var b=document.createElement('button'); b.className='btn small'; b.textContent=t('btnFly');
       b.onclick=function(){closeModals(); sfx('portal'); startLocation(i);}; row.appendChild(b); }
     list.appendChild(row);
   });
@@ -1171,7 +1431,7 @@ function openHelp(){ if(G.modal==='help'){closeModals();return;} G.modal='help';
 function winGame(){
   if(G.over) return; G.over=true; sfx('win'); try{localStorage.removeItem('listopad_save');}catch(e){}
   var mins=Math.floor((Date.now()-G.startTime)/60000), secs=Math.floor((Date.now()-G.startTime)/1000)%60;
-  document.getElementById('victory-stats').innerHTML='🦸 '+G.ch.name+' • Уровень '+G.lvl+'<br>📜 Заданий: '+G.quests.done.length+' • 👹 Побед: '+G.kills+'<br>⏱️ Время: '+mins+' мин '+secs+' сек • 🌰 '+G.coins;
+  document.getElementById('victory-stats').innerHTML='🦸 '+G.ch.name+t('vLvl')+G.lvl+t('vQuests')+G.quests.done.length+t('vKills')+G.kills+t('vTime')+mins+t('vMin')+secs+t('vSec')+G.coins;
   G.modal='victory'; document.getElementById('m-victory').hidden=false;
 }
 
@@ -1270,10 +1530,10 @@ function buildTitle(){
   CHARACTERS.forEach(function(ch){
     var card=document.createElement('div'); card.className='char-card';
     card.innerHTML='<canvas width="24" height="32"></canvas><h3>'+ch.name+'</h3><div class="ct">'+ch.title+'</div>'+
-      '<div class="statline">❤️ HP: '+ch.hp+'<br>⚔️ Атака: '+ch.atk+'<br>👟 Скорость: '+ch.speed+'<br>🎯 '+(ch.ranged?'Дальний бой':'Ближний бой')+'</div>'+
+      '<div class="statline">❤️ HP: '+ch.hp+'<br>'+t('cardAtk')+ch.atk+'<br>'+t('cardSpd')+ch.speed+'<br>🎯 '+(ch.ranged?t('cardRanged'):t('cardMelee'))+'</div>'+
       '<div class="ability">⚡ '+ch.abName+'</div><div class="cdesc">'+ch.desc+'</div>';
     drawPortrait(card.querySelector('canvas'),ch);
-    var b=document.createElement('button'); b.className='btn'; b.textContent='▶ Играть';
+    var b=document.createElement('button'); b.className='btn'; b.textContent=t('btnPlay');
     b.onclick=function(){ initAudio(); sfx('quest'); try{localStorage.removeItem('listopad_save');}catch(e){} startGame(ch.id,null); };
     card.appendChild(b); grid.appendChild(card);
   });
@@ -1282,7 +1542,7 @@ function buildTitle(){
     var box=document.getElementById('continue-box');
     box.innerHTML='';
     var b=document.createElement('button'); b.className='btn green';
-    b.textContent='▶ Продолжить: '+(ch?ch.name:'герой')+', ур.'+sv.lvl+', '+LOCATIONS[sv.loc].name;
+    b.textContent=t('contA')+(ch?ch.name:t('hero'))+t('contLvl')+sv.lvl+', '+LOCATIONS[sv.loc].name;
     b.onclick=function(){ initAudio(); startGame(sv.ch,sv); };
     box.appendChild(b);
   }
@@ -1302,7 +1562,7 @@ function loop(t){
   var dt=Math.min(0.05,(t-lastT)/1000||0.016); lastT=t;
   update(dt); render();
 }
-buildTitle();
+setLang(LANG);
 requestAnimationFrame(loop);
 </script>
 </body>
