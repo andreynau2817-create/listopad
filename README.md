@@ -6,7 +6,7 @@
 
 <p align="center">
   <b>EN</b> · <a href="#-описание-на-русском">RU</a>
-  &nbsp;•&nbsp; 🎮 <a href="https://__USER__.github.io/__REPO__/"><b>Play online</b></a>
+  &nbsp;•&nbsp; 🎮 <a href="https://andreynau2817-create.github.io/listopad/"><b>Play online</b></a>
 </p>
 
 A cozy **pixel-art autumn indie RPG** in a single HTML file. Choose 1 of 4 heroes, journey through 10 autumn locations, defeat 5 bosses, befriend 40 NPCs and save the Fall itself! 🍁
